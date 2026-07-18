@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+  --foreground: #172554;
+  --background: #f8fafc;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  direction: rtl;
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  color: var(--foreground);
+  background: #f8fafc;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+@layer components {
+  .glass-panel {
+    @apply border border-white/70 bg-white/70 shadow-glass backdrop-blur-2xl;
+  }
+
+  .soft-card {
+    @apply rounded-[1.25rem] border border-slate-200/80 bg-white/85 shadow-neuro;
+  }
+
+  .icon-button {
+    @apply inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-slate-200 bg-white text-royal-700 transition hover:-translate-y-0.5 hover:border-royal-200 hover:bg-royal-50;
+  }
+
+  .primary-button {
+    @apply inline-flex items-center justify-center gap-2 rounded-2xl bg-royal-600 px-5 py-3 font-medium text-white shadow-lg shadow-royal-600/20 transition hover:-translate-y-0.5 hover:bg-royal-700;
+  }
+
+  .gold-button {
+    @apply inline-flex items-center justify-center gap-2 rounded-2xl bg-gold-500 px-5 py-3 font-medium text-white shadow-lg shadow-gold-500/20 transition hover:-translate-y-0.5 hover:bg-gold-700;
+  }
+
+  .field {
+    @apply w-full rounded-2xl border border-slate-200 bg-white/80 px-4 py-3 text-sm outline-none transition placeholder:text-slate-400 focus:border-royal-500 focus:ring-4 focus:ring-royal-100;
+  }
+
+  .chip {
+    @apply inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/80 px-3 py-1 text-xs font-medium text-slate-600;
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "Bonus Minus Classroom",
+  "short_name": "BonusMinus",
+  "description": "منصة عربية لإدارة نقاط الطلاب داخل الفصل",
+  "start_url": "/",
+  "display": "standalone",
+  "dir": "rtl",
+  "lang": "ar",
+  "background_color": "#f8fafc",
+  "theme_color": "#1d4ed8",
+  "icons": [
+    {
+      "src": "/icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
