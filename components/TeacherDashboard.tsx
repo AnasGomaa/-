@@ -48,6 +48,8 @@ export function TeacherDashboard() {
   const [isTeacherUnlocked, setIsTeacherUnlocked] = useState(false);
   const [teacherCode, setTeacherCode] = useState("");
   const [teacherError, setTeacherError] = useState("");
+  const [appSettings, setAppSettings] = useState(settings);
+  const [settingsSaved, setSettingsSaved] = useState(false);
   const [students, setStudents] = useState(baseStudents);
   const [transactions, setTransactions] = useState(baseTransactions);
   const [rewards, setRewards] = useState(baseRewards);
@@ -130,12 +132,27 @@ export function TeacherDashboard() {
     setTeacherError("الرمز غير صحيح");
   }
 
+  function saveSettings(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    setAppSettings({
+      schoolName: String(formData.get("schoolName") || appSettings.schoolName),
+      className: String(formData.get("className") || appSettings.className),
+      logoText: String(formData.get("logoText") || appSettings.logoText),
+      academicYear: String(formData.get("academicYear") || appSettings.academicYear),
+      primaryColor: String(formData.get("primaryColor") || appSettings.primaryColor),
+      accentColor: String(formData.get("accentColor") || appSettings.accentColor)
+    });
+    setSettingsSaved(true);
+    window.setTimeout(() => setSettingsSaved(false), 2200);
+  }
+
   if (!isTeacherUnlocked) {
     return (
       <main className="grid min-h-screen place-items-center bg-hero-mesh px-4 py-8">
         <form onSubmit={unlockTeacher} className="glass-panel w-full max-w-md rounded-[2rem] p-6">
           <Link href="/" className="mb-8 flex items-center gap-3">
-            <span className="grid h-12 w-12 place-items-center rounded-2xl bg-royal-600 font-bold text-white">{settings.logoText}</span>
+            <span className="grid h-12 w-12 place-items-center rounded-2xl bg-royal-600 font-bold text-white">{appSettings.logoText}</span>
             <div>
               <p className="font-medium text-royal-950">دخول المعلم</p>
               <p className="text-xs text-slate-500">اكتب رمز المعلم لفتح لوحة التحكم</p>
@@ -170,10 +187,10 @@ export function TeacherDashboard() {
         <header className="glass-panel sticky top-4 z-30 mb-6 rounded-[1.5rem] p-3">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <Link href="/" className="flex items-center gap-3">
-              <span className="grid h-12 w-12 place-items-center rounded-2xl bg-royal-600 font-bold text-white">{settings.logoText}</span>
+              <span className="grid h-12 w-12 place-items-center rounded-2xl bg-royal-600 font-bold text-white">{appSettings.logoText}</span>
               <div>
-                <p className="font-medium text-royal-950">{settings.className}</p>
-                <p className="text-xs text-slate-500">لوحة تحكم المعلم | {settings.academicYear}</p>
+                <p className="font-medium text-royal-950">{appSettings.className}</p>
+                <p className="text-xs text-slate-500">لوحة تحكم المعلم | {appSettings.academicYear}</p>
               </div>
             </Link>
             <nav className="flex gap-2 overflow-x-auto pb-1">
@@ -330,15 +347,20 @@ export function TeacherDashboard() {
 
             {activeTab === "settings" && (
               <Panel title="إعدادات المنصة">
-                <div className="grid gap-4 md:grid-cols-2">
-                  <input className="field" defaultValue={settings.schoolName} aria-label="اسم المدرسة" />
-                  <input className="field" defaultValue={settings.className} aria-label="اسم الفصل" />
-                  <input className="field" defaultValue={settings.logoText} aria-label="الشعار" />
-                  <input className="field" defaultValue={settings.academicYear} aria-label="العام الدراسي" />
-                  <input className="field h-14" type="color" defaultValue={settings.primaryColor} aria-label="لون المنصة" />
-                  <input className="field h-14" type="color" defaultValue={settings.accentColor} aria-label="اللون الذهبي" />
-                </div>
-                <button className="primary-button mt-5">حفظ الإعدادات</button>
+                <form onSubmit={saveSettings}>
+                  <div className="grid gap-4 md:grid-cols-2">
+                    <input className="field" name="schoolName" defaultValue={appSettings.schoolName} aria-label="اسم المدرسة" placeholder="اسم المدرسة" />
+                    <input className="field" name="className" defaultValue={appSettings.className} aria-label="اسم الفصل" placeholder="اسم الفصل" />
+                    <input className="field" name="logoText" defaultValue={appSettings.logoText} aria-label="الشعار" placeholder="الشعار" maxLength={4} />
+                    <input className="field" name="academicYear" defaultValue={appSettings.academicYear} aria-label="العام الدراسي" placeholder="العام الدراسي" />
+                    <input className="field h-14" name="primaryColor" type="color" defaultValue={appSettings.primaryColor} aria-label="لون المنصة" />
+                    <input className="field h-14" name="accentColor" type="color" defaultValue={appSettings.accentColor} aria-label="اللون الذهبي" />
+                  </div>
+                  <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center">
+                    <button className="primary-button" type="submit">حفظ الإعدادات</button>
+                    {settingsSaved && <p className="rounded-2xl bg-emerald-50 px-4 py-3 text-sm text-emerald-700">تم حفظ البيانات وتحديث الصفحة</p>}
+                  </div>
+                </form>
               </Panel>
             )}
           </motion.section>
