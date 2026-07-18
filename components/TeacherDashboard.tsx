@@ -149,9 +149,10 @@ export function TeacherDashboard() {
             className="field text-center text-2xl tracking-[0.4em]"
             inputMode="numeric"
             maxLength={4}
+            type="password"
             value={teacherCode}
             onChange={(event) => setTeacherCode(event.target.value.replace(/\D/g, ""))}
-            placeholder="1370"
+            placeholder="••••"
           />
           {teacherError && <p className="mt-3 rounded-2xl bg-rose-50 px-4 py-3 text-sm text-rose-700">{teacherError}</p>}
           <button className="primary-button mt-5 w-full" type="submit">
